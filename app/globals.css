@@ -2,54 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-.center{
+.center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 @keyframes fade-in {
-  from{
+  from {
     transform: translateY(50px);
     filter: blur(10px);
   }
 }
 @keyframes eye {
-  0%{
+  0% {
     height: 0px;
     width: 0px;
   }
-  10%{
+  10% {
     height: 200px;
   }
 }
 
-.fade-in{
-  animation: fade-in 2s cubic-bezier(0.215, 0.610, 0.355, 1);
+.fade-in {
+  animation: fade-in 2s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 @keyframes increase {
-  0%{
+  0% {
     scale: 0;
   }
-  100%{
+  100% {
     scale: 1;
   }
 }
-.increase{
-  animation: increase 2s cubic-bezier(0.215, 0.610, 0.355, 1);
+.increase {
+  animation: increase 2s cubic-bezier(0.215, 0.61, 0.355, 1);
   animation-delay: 2s;
   scale: 0;
   animation-fill-mode: forwards;
 }
 
 @keyframes fade-delay {
-  to{
+  to {
     opacity: 1;
   }
 }
-.fade-delay{
+.fade-delay {
   animation: fade-delay 2s linear;
   animation-delay: 3s;
   opacity: 0;
   animation-fill-mode: forwards;
+}
+.custom-shadow {
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.05),
+    0 14.2593px 24.5972px rgba(0, 0, 0, 0.038),
+    0 8.47407px 13.3778px rgba(0, 0, 0, 0.03),
+    0 4.4px 6.825px rgba(0, 0, 0, 0.025),
+    0 1.79259px 3.42222px rgba(0, 0, 0, 0.02),
+    0 0.407407px 1.65278px rgba(0, 0, 0, 0.012);
+}
+@keyframes shining {
+  from{
+    left: -10px;
+  }
+  to{
+    left: 300%;
+  }
+}
+.shining{
+  animation: shining infinite 5s ease-in;
+  animation-delay: 2s;
 }

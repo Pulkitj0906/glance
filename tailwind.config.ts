@@ -15,6 +15,7 @@ const config: Config = {
         "secondary":"#f7f7f7",
         "linkedin":"#0e76a8",
         "github-green":"#39d353",
+        "brand":"#a5775c",
       },
     },
   },

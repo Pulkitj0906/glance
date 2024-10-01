@@ -42,7 +42,7 @@ export default function Home() {
       <div className="center flex-col fade-delay backdrop-blur-xl">
         <button
           onClick={() => router.push("/signup")}
-          className="bg-[#a5775c] mt-16 p-2 text-white rounded-xl"
+          className="bg-brand mt-16 p-2 text-white rounded-xl"
         >
           Create your own glance
         </button>
