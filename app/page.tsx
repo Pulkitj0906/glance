@@ -1,101 +1,59 @@
+"use client";
 import Image from "next/image";
+import eye from "@/public/eye1.gif";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import flower from "@/public/test.jpeg";
+import insta1 from "@/public/insta1.jpg";
+import insta3 from "@/public/insta3.jpg";
+import insta4 from "@/public/insta4.jpg";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="center h-screen flex-col">
+      <div className="p-5 h-36 w-32 overflow-hidden increase absolute top-[20%] left-[10%] border-text-secondary/20 border-[0.1px] bg-linkedin/10 shadow-xl flex flex-col rounded-xl font-semibold">
+        <FaLinkedin size={24} color="#0e76a8" />
+        <p className="text-xs">LinkedIn</p>
+        <button className="text-linkedin border-2 px-2 text-xs w-fit p-1 rounded-xl mt-auto border-linkedin">
+          Connect
+        </button>
+      </div>
+      <div className=" size-40 absolute top-[37%] rotate-12 increase left-[6%] rounded-xl overflow-clip shadow-md ">
+        <Image alt="flowers" src={flower} className="object-cover size-full" />
+      </div>
+      <div className="p-5 absolute right-[10%] h-72 top-[20%]  increase -rotate-12 border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
+        <FaInstagram size={24} />
+        <p className="text-xs">Instagram</p>
+        <div className="grid grid-cols-2 grid-rows-2 gap-2 mt-3">
+          <Image alt="insta" src={insta1} height={70} className="rounded-xl" />
+          <Image alt="insta" src={insta4} height={70} className="rounded-xl" />
+          <Image alt="insta" src={insta3} height={70} className="rounded-xl" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button className=" border-2 text-xs w-fit p-1 px-2 rounded-xl mt-auto text-black bg-white">
+          Follow
+        </button>
+      </div>
+
+      <h2 className="font- text-xl text-text-secondary fade-in text-center backdrop-blur-xl">
+        Show what you are and create <br /> in a
+      </h2>
+      <h1 className="text-5xl font-bold fade-in backdrop-blur-xl">Glance</h1>
+      <div className="center flex-col fade-delay backdrop-blur-xl">
+        <button
+          onClick={() => router.push("/signup")}
+          className="bg-[#a5775c] mt-16 p-2 text-white rounded-xl"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Create your own glance
+        </button>
+        <p className="mt-4 text-xs opacity-40">Log in</p>
+      </div>
+      <Image
+        src={eye}
+        alt="eye"
+        className="size absolute top-5 mt-2 fade-in"
+        height={50}
+      />
     </div>
   );
 }
