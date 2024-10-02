@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import Grid from "./_components/Grid";
 import SlugForm from "./_components/SlugForm";
 import SignUpForm from "./_components/SignUpForm";
+import GridFalse from "./_components/GridFalse";
 
 export default function Home() {
   const [slug, setSlug] = useState("");
@@ -25,8 +25,8 @@ export default function Home() {
           />
         )}
       </div>
-      <div className="h-full lg:w-1/2 p-10 hiden">
-        <Grid />
+      <div className="h-full lg:w-1/2 p-10">
+        <GridFalse />
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import { Available } from "./_components/Available";
 const Page = () => {
   const router = usePathname().substring(1);
   const [status, setStatus] = useState("loading");
+  const [data, setData] = useState();
 
   const fetchData = async () => {
     const { data, error } = await supabase
@@ -18,6 +19,7 @@ const Page = () => {
       .single();
     
     if (data) {
+      setData(data)
       setStatus("found");
     } else {
       setStatus("Available");
@@ -30,7 +32,7 @@ const Page = () => {
 
   switch (status) {
     case "found":
-      return <Profile />;
+      return <Profile data={data}/>;
       
     case "Available":
       return <Available slug={router}/>;

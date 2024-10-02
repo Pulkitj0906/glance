@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Grid from "../signup/_components/Grid";
+import Grid from "../signup/_components/GridFalse";
 
 export default function Home() {
   const [slug, setSlug] = useState("");

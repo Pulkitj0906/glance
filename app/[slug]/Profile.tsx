@@ -2,11 +2,13 @@ import Image from "next/image";
 import pfp from "@/public/pic3.jpg";
 import { MdOutlineExplore } from "react-icons/md";
 import Shiny from "../_ui-components/Shiny";
+import Grid from "./_profile-components/Grid";
 
-const Profile = () => {
+const Profile = ({data}:{data:any}) => {
+  console.log(data)
   return (
-    <div className="p-16 h-screen">
-      <div className="flex flex-col h-full max-w-fit">
+    <div className="p-16 h-screen flex gap-40">
+      <div className="flex flex-col h-full max-w-fit shrink-0">
         <Image
           alt="pfp"
           src={pfp}
@@ -15,7 +17,7 @@ const Profile = () => {
           className="rounded-full"
         />
         <p className="mt-8 pl-2 text-[32px] xl:text-[44px] tracking-[-1px] font-bold">
-          Pulkit Jain
+          {data.name}
         </p>
 
         <div className="mt-auto text-xs tracking-tighter flex gap-4 center">
@@ -30,6 +32,9 @@ const Profile = () => {
             <MdOutlineExplore size={16} />
           </button>
         </div>
+      </div>
+      <div className=" h-full w-[820px] ml-auto">
+        <Grid/>
       </div>
     </div>
   );

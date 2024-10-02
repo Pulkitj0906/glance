@@ -7,8 +7,9 @@ import insta3 from "@/public/insta3.jpg";
 import insta4 from "@/public/insta4.jpg";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import Month from "./github/Month";
+// import Month from "./github/Month";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
+import GridItem from "./GridItem";
 
 const Grid = () => {
   const progress = [
@@ -16,17 +17,48 @@ const Grid = () => {
     [13, 2],
   ];
   return (
-    <div className="grid grid-rows-4 grid-cols-4 gap-8 max-h-[640px] min-h-[640px] *:border-text-secondary/20 *:border-[0.1px]">
-      <div className="col-span-2 row-span-2  rounded-xl overflow-clip shadow-md ">
-        <Image alt="flowers" src={flower} className="object-cover size-full" />
-      </div>
-      <div className="p-5 border-text-secondary/20 border-[0.1px] bg-linkedin/10 shadow-md flex flex-col rounded-xl font-semibold">
-        <FaLinkedin size={24} color="#0e76a8" />
-        <p className="text-xs">LinkedIn</p>
+    <div className="grid grid-rows-4 grid-cols-4 gap-10 min-h-[640px] *:min-h-[175px] *:border-text-secondary/20 *:border-[0.1px]">
+      {/* <div className="p-6  bg-linkedin/10 shadow-md flex flex-col rounded-3xl ">
+        <FaLinkedin size={40} color="#0e76a8" />
+        <p className="text-sm font-semibold mt-1">LinkedIn</p>
+        <p className="text-xs text-text-secondary ">UserName</p>
         <button className="text-linkedin border-2 px-2 text-xs w-fit p-1 rounded-xl mt-auto border-linkedin">
           Connect
         </button>
-      </div>
+      </div> */}
+      <GridItem
+        Icon={FaLinkedin}
+        iconColor="#0e76a8"
+        buttonClassName="border-linkedin text-linkedin"
+        buttonTitle="Connect"
+        className="bg-linkedin/10 "
+        title="LinkedIn"
+        username="@username"
+      />
+      <GridItem
+        Icon={FaXTwitter}
+        buttonClassName="bg-black text-white"
+        buttonTitle="Follow"
+        className=""
+        title="Twitter"
+        username="@username"
+      />
+      <GridItem
+        Icon={FaGithub}
+        buttonClassName="text-black"
+        buttonTitle="Follow"
+        className="col-span-2 row"
+        title="Github"
+        username="@username"
+      />
+      <GridItem
+        Icon={FaLinkedin}
+        buttonClassName=""
+        buttonTitle="Connect"
+        className=""
+        title="LinkedIn"
+        username="@username"
+      />
       <div className="p-5 border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
         <FaXTwitter size={24} />
         <p className="text-xs">Twitter</p>
@@ -42,16 +74,16 @@ const Grid = () => {
             Follow
           </button>
         </div>
-        <div className="h-full w-1/2 center">
+        {/* <div className="h-full w-1/2 center">
           <Month
             completed={progress}
             month="September"
             startError={4}
             totalDays={30}
           />
-        </div>
+        </div> */}
       </div>
-      <div className="p-5  row-span-2 col-span- border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
+      {/* <div className="p-5  row-span-2 col-span- border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
         <FaInstagram size={24} />
         <p className="text-xs">Instagram</p>
         <div className="grid grid-cols-2 grid-rows-2 gap-2 mt-3">
@@ -62,8 +94,8 @@ const Grid = () => {
         <button className=" border-2 text-xs w-fit p-1 px-2 rounded-xl mt-auto text-black bg-white">
           Follow
         </button>
-      </div>
-      <div className="p-5  row-span-2 col-span-3 border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
+      </div> */}
+      {/* <div className="p-5  row-span-2 col-span-3 border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
         <AiOutlineFundProjectionScreen size={24} />
         <p className="text-xs">Personal Project</p>
         <p className="text-xs text-text-secondary">
@@ -76,7 +108,7 @@ const Grid = () => {
         <button className=" border-2 text-xs w-fit p-1 px-2 rounded-xl mt-auto text-black bg-white">
           Visit
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
