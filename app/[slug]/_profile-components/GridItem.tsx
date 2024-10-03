@@ -19,7 +19,7 @@ const GridItem = ({
 }) => {
   return (
     <div
-      className={`p-6 shadow-md flex flex-col rounded-3xl ${className}`}
+      className={`p-6 shadow-md max-w-[175px flex flex-col rounded-3xl ${className}`}
     >
       <Icon size={40} color={iconColor}/>
       <p className="text-sm font-semibold mt-1">{title}</p>

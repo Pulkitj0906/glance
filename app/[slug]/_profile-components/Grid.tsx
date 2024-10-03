@@ -1,14 +1,6 @@
-import Image from "next/image";
-import flower from "@/public/test.jpeg";
-import insta1 from "@/public/insta1.jpg";
-import pp1 from "@/public/pp1.png";
-import pp2 from "@/public/pp2.png";
-import insta3 from "@/public/insta3.jpg";
-import insta4 from "@/public/insta4.jpg";
-import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
+
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-// import Month from "./github/Month";
-import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import GridItem from "./GridItem";
 
 const Grid = () => {
@@ -17,7 +9,7 @@ const Grid = () => {
     [13, 2],
   ];
   return (
-    <div className="grid grid-rows-4 grid-cols-4 gap-10 min-h-[640px] *:min-h-[175px] *:border-text-secondary/20 *:border-[0.1px]">
+    <div className="lg: grid grid-flow-row-dense grid-flow-co flex-wrap flex-1 lg:grid-rows-4 lg:grid-cols-4 gap-10 min-h[640px] *:min-h-[175px] *:min-w-[175px] *:border-text-secondary/20 *:border-[0.1px]">
       {/* <div className="p-6  bg-linkedin/10 shadow-md flex flex-col rounded-3xl ">
         <FaLinkedin size={40} color="#0e76a8" />
         <p className="text-sm font-semibold mt-1">LinkedIn</p>
@@ -47,7 +39,7 @@ const Grid = () => {
         Icon={FaGithub}
         buttonClassName="text-black"
         buttonTitle="Follow"
-        className="col-span-2 row"
+        className="col-span-2"
         title="Github"
         username="@username"
       />

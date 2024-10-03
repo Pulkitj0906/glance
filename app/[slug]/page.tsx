@@ -5,21 +5,24 @@ import { useEffect, useState } from "react";
 import Loading from "./_components/Loading";
 import Profile from "./Profile";
 import { Available } from "./_components/Available";
+import axios from "axios";
+import { fetchUserInfo } from "@/util/checkAccess";
 
 const Page = () => {
   const router = usePathname().substring(1);
   const [status, setStatus] = useState("loading");
   const [data, setData] = useState();
+  const [userSlug, setUserSlug] = useState("")
 
   const fetchData = async () => {
     const { data, error } = await supabase
       .from("Portfolio")
-      .select("*")
+      .select(`*,Users(email)`)
       .eq("slug", router)
       .single();
-    
+
     if (data) {
-      setData(data)
+      setData(data);
       setStatus("found");
     } else {
       setStatus("Available");
@@ -28,15 +31,16 @@ const Page = () => {
 
   useEffect(() => {
     fetchData();
+    fetchUserInfo().then(slug=>setUserSlug(slug))
   }, []);
 
   switch (status) {
     case "found":
-      return <Profile data={data}/>;
-      
+      return <Profile data={data} userSlug={userSlug}/>;
+
     case "Available":
-      return <Available slug={router}/>;
-      
+      return <Available slug={router} userSlug={userSlug}/>;
+
     default:
       return <Loading />;
   }

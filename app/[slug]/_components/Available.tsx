@@ -2,8 +2,20 @@ import Image from "next/image";
 import eye from "@/public/eye1.gif";
 import illus1 from "@/public/claimillustration-mobile.png";
 import illus2 from "@/public/pulkit3.png";
+import { useRouter } from "next/navigation";
 
-export const Available = ({ slug }: { slug: string }) => {
+export const Available = ({
+  slug,
+  userSlug,
+}: {
+  slug: string;
+  userSlug: string;
+}) => {
+  const router=useRouter();
+  const handleClick=()=>{
+    if(userSlug)
+      router.push("/"+userSlug)
+  }
   return (
     <div className="center flex-col gap-16 text-text-secondary h-screen overflow-clip pt-24">
       <Image alt="eye" src={eye} className="w-20 mt-20 " />
@@ -13,13 +25,11 @@ export const Available = ({ slug }: { slug: string }) => {
         </div>
         <p className="">
           glance.vercel.app/
-          <span className="text-black">
-            {slug}
-          </span>
+          <span className="text-black">{slug}</span>
         </p>
       </div>
       <p className="text-xs lg:text-base">Glance is the only link you need.</p>
-      <button className="px-5 py-4 bg-brand rounded-xl text-white lg:text-lg active:scale-95">
+      <button onClick={handleClick} className="px-5 py-4 bg-brand rounded-xl text-white lg:text-lg active:scale-95">
         Claim handle now
       </button>
       <div className="enter max-w-[75%] lg:flex hidden  rounded-xl">

@@ -61,15 +61,35 @@
     0 1.79259px 3.42222px rgba(0, 0, 0, 0.02),
     0 0.407407px 1.65278px rgba(0, 0, 0, 0.012);
 }
+.custom-shadow2 {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 27px 54px rgba(0, 0, 0, 0.04),
+    0 17.5px 31.625px rgba(0, 0, 0, 0.03), 0 10.4px 17.2px rgba(0, 0, 0, 0.024),
+    0 5.4px 8.775px rgba(0, 0, 0, 0.02), 0 2.2px 4.4px rgba(0, 0, 0, 0.016),
+    0 0.5px 2.125px rgba(0, 0, 0, 0.01);
+}
+
 @keyframes shining {
-  from{
+  from {
     left: -10px;
   }
-  to{
+  to {
     left: 300%;
   }
 }
-.shining{
+.shining {
   animation: shining infinite 5s ease-in;
   animation-delay: 2s;
+}
+@keyframes dashboard {
+  0% {
+    transform: translate(-50%, 100px);
+    filter: blur(8px);
+  }
+  100% {
+    transform: translate(-50%);
+    filter: blur(0);
+  }
+}
+.dashboard-anim {
+  animation: dashboard 1s cubic-bezier(.2,1.18,.47,1) .9s backwards;
 }
