@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Loading from "./_components/Loading";
 import Profile from "./Profile";
 import { Available } from "./_components/Available";
-import axios from "axios";
 import { fetchUserInfo } from "@/util/checkAccess";
 
 const Page = () => {
@@ -36,7 +35,7 @@ const Page = () => {
 
   switch (status) {
     case "found":
-      return <Profile data={data} userSlug={userSlug}/>;
+      return <Profile data={data} userSlug={userSlug} />;
 
     case "Available":
       return <Available slug={router} userSlug={userSlug}/>;

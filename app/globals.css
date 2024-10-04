@@ -67,6 +67,14 @@
     0 5.4px 8.775px rgba(0, 0, 0, 0.02), 0 2.2px 4.4px rgba(0, 0, 0, 0.016),
     0 0.5px 2.125px rgba(0, 0, 0, 0.01);
 }
+.custom-shadow3 {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06), 0 9px 9px rgba(0, 0, 0, 0.04),
+    0 5.83333px 5.27083px rgba(0, 0, 0, 0.03),
+    0 3.46667px 2.86667px rgba(0, 0, 0, 0.024),
+    0 1.8px 1.4625px rgba(0, 0, 0, 0.02),
+    0 0.733333px 0.733333px rgba(0, 0, 0, 0.016),
+    0 0.166667px 0.354167px rgba(0, 0, 0, 0.01) !important;
+}
 
 @keyframes shining {
   from {
@@ -91,5 +99,19 @@
   }
 }
 .dashboard-anim {
-  animation: dashboard 1s cubic-bezier(.2,1.18,.47,1) .9s backwards;
+  animation: dashboard 1s cubic-bezier(0.2, 1.18, 0.47, 1) 0.9s backwards;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.slide-up{
+  animation: slide-up 1.5s cubic-bezier(0.2, 1.18, 0.47, 1) ;
 }
