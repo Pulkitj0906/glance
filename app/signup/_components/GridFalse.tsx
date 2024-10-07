@@ -17,7 +17,7 @@ const GridFalse = () => {
   ];
   return (
     <div className="grid grid-rows-4 grid-cols-4 gap-8 max-h-[640px] min-h-[640px] *:border-text-secondary/20 *:border-[0.1px]">
-      <div className="col-span-2 row-span-2  rounded-xl overflow-clip shadow-md ">
+      <div className="col-span-2 row-span-2 float rounded-xl overflow-clip shadow-md ">
         <Image alt="flowers" src={flower} className="object-cover size-full" />
       </div>
       <div className="p-5 border-text-secondary/20 border-[0.1px] bg-linkedin/10 shadow-md flex flex-col rounded-xl font-semibold">
@@ -51,7 +51,7 @@ const GridFalse = () => {
           />
         </div>
       </div>
-      <div className="p-5  row-span-2 col-span- border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
+      <div className="p-5 float row-span-2 col-span- border-text-secondary/20 border-[0.1px] shadow-md flex flex-col rounded-xl font-semibold">
         <FaInstagram size={24} />
         <p className="text-xs">Instagram</p>
         <div className="grid grid-cols-2 grid-rows-2 gap-2 mt-3">

@@ -35,7 +35,7 @@ const Page = () => {
 
   switch (status) {
     case "found":
-      return <Profile data={data} userSlug={userSlug} />;
+      return <Profile data={data} userSlug={userSlug} setData={setData}/>;
 
     case "Available":
       return <Available slug={router} userSlug={userSlug}/>;

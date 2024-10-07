@@ -31,10 +31,10 @@ const SlugForm = ({
     }
   };
   return (
-    <div className="">
+    <div className="slide-right">
       <h2 className="text-4xl font-bold">Present yourself in style</h2>
       <p className="text-text-secondary mt-4 text-xl">Claim your link now!</p>
-      <form className=" mt-4" onSubmit={() => setPage(2)}>
+      <form className=" mt-4" onSubmit={() => {isAvailable && setPage(2)}}>
         <div className="mt-20 flex bg-secondary rounded-xl p-2 text-text-secondary items-center">
           <p>glance.vercel.app/</p>
           <input
@@ -54,7 +54,9 @@ const SlugForm = ({
               ) : isAvailable ? (
                 <FaCheck color="4edd76" size={16} />
               ) : (
-                <IoIosClose size={24} />
+                <button onClick={()=>setSlug("")} className="center">
+                  <IoIosClose size={24} />
+                </button>
               )}
             </div>
           )}

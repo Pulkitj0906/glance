@@ -9,7 +9,7 @@ const SignUpForm = ({
   slug: string;
 }) => {
   return (
-    <div className="">
+    <div className="slide-left">
       <button onClick={() => setPage(0)}>
         <IoIosArrowRoundBack size={28} />
       </button>

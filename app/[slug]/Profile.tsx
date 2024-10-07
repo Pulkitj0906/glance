@@ -10,13 +10,15 @@ import ProfilePicture from "./_profile-components/ProfilePicture";
 const Profile = ({
   data,
   userSlug,
+  setData,
 }: {
   data: any;
   userSlug: string;
+  setData: (newdata: any) => void;
 }) => {
   const [name, setName] = useState(data.name);
   const [bio, setBio] = useState(data.bio);
-  
+
   const router = useRouter();
   const role =
     userSlug === undefined
@@ -52,6 +54,20 @@ const Profile = ({
         toUpdate,
         pfp: null,
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addLink = async (link: string) => {
+    try {
+      const res = await axios.post("/api/addLink", { link });
+      if (res.data.item) {
+        setData((prv: any) => ({
+          ...prv,
+          grids: [...prv.grids, res.data.item],
+        }));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -108,9 +124,9 @@ const Profile = ({
         </div>
       </div>
       <div className="h-full w-full max-w-[350px] lg:max-w-fit xl:w-[820px] lg:ml-auto">
-        <Grid />
+        <Grid links={data.grids} />
       </div>
-      {role == "self" && <Dashboard />}
+      {role == "self" && <Dashboard addLink={addLink} />}
     </div>
   );
 };
