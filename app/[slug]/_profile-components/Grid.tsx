@@ -9,7 +9,7 @@ const Grid = ({ links }: { links: Record<string, string>[] }) => {
   ];
   console.log(links)
   return (
-    <div className="lg: grid grid-flow-row-dense grid-flow-co flex-wrap flex-1 lg:grid-rows-4 lg:grid-cols-4 gap-10 min-h[640px] *:h-[175px] *:min-w-[175px] *:border-text-secondary/20 *:border-[0.1px]">
+    <div className="lg: grid grid-flow-row-dense grid-flow-co flex-wra flex- lg:grid-rows-4 lg:grid-cols-4 gap-10 min-h-[640px] *:min-h-[175px] *:min-w-[175px] *:border-text-secondary/20 *:border-[0.1px]">
       {/* <GridItem
         link=""
         Icon={FaLinkedin}
@@ -63,6 +63,7 @@ const Grid = ({ links }: { links: Record<string, string>[] }) => {
               faviconLink={l.favicon}
               title={l.title}
               username={l.username}
+              type={l.type}
             />
           ))}
       {/* <div className="p-5  row-span- col-span-2 border-text-secondary/20 border-[0.1px] shadow-md flex f rounded-xl font-semibold">

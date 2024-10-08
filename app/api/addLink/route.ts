@@ -59,9 +59,11 @@ export async function POST(req: NextRequest) {
     }
     if(link.includes("github.com")){
         item['title']=title.substring(title.indexOf("(")+1,title.indexOf(")"))
+        item["type"]="github"
     }
     if(link.includes("x.com")){
         item["title"]="X(Twitter)"
+        item["type"]="x"
     }
     
     console.log(item)
