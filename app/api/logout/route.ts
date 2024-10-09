@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const response = NextResponse.json({
       message: "User logout successfully!",
@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     return response;
   } catch (error) {
     return NextResponse.json(
-      { message: "Error in logging you out!" },
+      { message: "Error in logging you out!",error },
       { status: 401 }
     );
   }

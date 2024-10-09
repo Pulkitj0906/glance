@@ -1,13 +1,15 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import GridItem from "./GridItem";
 
-const Grid = ({ links }: { links: Record<string, string>[] }) => {
-  const progress = [
-    [9, 4],
-    [13, 2],
-  ];
-  console.log(links)
+const Grid = ({
+  links,
+  role,
+  onDeleteGridItem
+}: {
+  links: Record<string, string>[];
+  role: string;
+  onDeleteGridItem:(id: string) => void
+}) => {
+
   return (
     <div className="lg: grid grid-flow-row-dense grid-flow-co flex-wra flex- lg:grid-rows-4 lg:grid-cols-4 gap-10 min-h-[640px] *:min-h-[175px] *:min-w-[175px] *:border-text-secondary/20 *:border-[0.1px]">
       {/* <GridItem
@@ -55,17 +57,21 @@ const Grid = ({ links }: { links: Record<string, string>[] }) => {
           Follow <span className="opacity-75">1.1k</span>
         </button>
       </div> */}
-        {links &&
-          links.map((l, idx) => (
-            <GridItem
-              link={l.link}
-              // Icon={FaGithub}
-              faviconLink={l.favicon}
-              title={l.title}
-              username={l.username}
-              type={l.type}
-            />
-          ))}
+      {links &&
+        links.map((l) => (
+          <GridItem
+            key={l.id}
+            link={l.link}
+            // Icon={FaGithub}
+            onDeleteGridItem={onDeleteGridItem}
+            id={l.id}
+            faviconLink={l.favicon}
+            title={l.title}
+            role={role}
+            username={l.username}
+            type={l.type}
+          />
+        ))}
       {/* <div className="p-5  row-span- col-span-2 border-text-secondary/20 border-[0.1px] shadow-md flex f rounded-xl font-semibold">
         <div className="h-full  flex flex-col w-1/2">
           <FaGithub size={24} />

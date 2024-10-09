@@ -6,18 +6,18 @@ import axios from "axios";
 import Dashboard from "./_profile-components/Dashboard";
 import { useState } from "react";
 import ProfilePicture from "./_profile-components/ProfilePicture";
+import { DataType } from "@/util/lib";
 
 const Profile = ({
   data,
   userSlug,
-  setData,
 }: {
-  data: any;
+  data: DataType;
   userSlug: string;
-  setData: (newdata: any) => void;
 }) => {
   const [name, setName] = useState(data.name);
   const [bio, setBio] = useState(data.bio);
+  const [links, setLinks] = useState(data.grids);
 
   const router = useRouter();
   const role =
@@ -48,7 +48,7 @@ const Profile = ({
 
   const saveProfile = async (toUpdate: string) => {
     try {
-      const res = await axios.post("/api/update", {
+      await axios.post("/api/update", {
         name,
         bio,
         toUpdate,
@@ -63,43 +63,61 @@ const Profile = ({
     try {
       const res = await axios.post("/api/addLink", { link });
       if (res.data.item) {
-        setData((prv: any) => ({
-          ...prv,
-          grids: [...prv.grids, res.data.item],
-        }));
+        setLinks((prevLinks) => [...prevLinks, res.data.item]);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const onDeleteGridItem = async (id: string) => {
+    const filteredLinks = links.filter((l) => l.id !== id);
+    setLinks(filteredLinks);
+    try {
+      await axios.post("/api/deleteLink", { id });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="lg:p-16 p-6 pb-44 lg:pb-6 min-h-screen h-fit flex justify-center items-center lg:items-start gap-40  gap- relative flex-col lg:flex-row">
-      <div className="flex flex-col centr h-full lg:h-[calc(100vh)] max-w-fit shrink-0 slide-up">
+      <div className="flex flex-col xl:fixed xl:left-16 h-full lg:h-[calc(100vh)] max-w-fit shrink-0 slide-up">
         <ProfilePicture
           self={role == "self"}
-          pfp={data.pfp}
+          pfp={data.pfp ? data.pfp : ""}
           deletePfp={saveProfile}
         />
-        <p
-          contentEditable={role == "self"}
-          onBlur={() => {
-            name !== data.name && saveProfile("name");
-          }}
-          onInput={(e) => setName(e.currentTarget.textContent)}
-          className="mt-8 pl-2 text-[32px] xl:text-[44px] tracking-[-1px] font-bold max-w-60 outline-none"
-        >
-          {data.name}
-        </p>
-        <p
-          contentEditable={role == "self"}
-          onBlur={() => {
-            bio !== data.bio && saveProfile("bio");
-          }}
-          onInput={(e) => setBio(e.currentTarget.textContent)}
-          className="text-text-secondary pl-2 text-[32px] tracking-[-1px] font-s max-w-60 outline-none"
-        >
-          {data.bio}
-        </p>
+        {role === "self" ? (
+          <input
+            value={name}
+            onBlur={() => {
+              if (name !== data.name) saveProfile("name");
+            }}
+            onChange={(e) => setName(e.target.value)}
+            className="mt-8 pl-2 text-[32px] xl:text-[44px] tracking-[-1px] font-bold max-w-60 outline-none"
+          />
+        ) : (
+          <p className="mt-8 pl-2 text-[32px] xl:text-[44px] tracking-[-1px] font-bold max-w-60">
+            {data.name}
+          </p>
+        )}
+
+        {role === "self" ? (
+          <input
+            value={bio}
+            onBlur={() => {
+              if (bio !== data.bio) saveProfile("bio");
+            }}
+            onChange={(e) => setBio(e.target.value)}
+            className="text-text-secondary pl-2 text-[32px] tracking-[-1px] font-s max-w-60 outline-none"
+          />
+        ) : (
+          <p className="text-text-secondary pl-2 text-[32px] tracking-[-1px] font-s max-w-60">
+            {data.bio}
+          </p>
+        )}
+
         <div className="absolute bottom-28 left-1/2 -translate-x-1/2 lg:relative mt-auto text-xs tracking-tighter gap-4 center">
           {role == "anon" && (
             <button
@@ -124,10 +142,11 @@ const Profile = ({
         </div>
       </div>
       <div className="h-full w-full max-w-[350px] lg:max-w-fit xl:w-[820px] lg:ml-auto">
-        <Grid links={data.grids} />
+        <Grid links={links} role={role} onDeleteGridItem={onDeleteGridItem} />
       </div>
       {role == "self" && <Dashboard addLink={addLink} />}
     </div>
   );
 };
+
 export default Profile;

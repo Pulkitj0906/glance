@@ -1,25 +1,11 @@
-import * as cheerio from "cheerio";
+
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { supabase } from "@/util/client";
-import { randomUUID } from "crypto";
 
 export async function POST(req: NextRequest) {
   try {
-    const { link } = await req.json();
-
-    const response = await fetch(link);
-    const html = await response.text();
-    const $ = cheerio.load(html);
-
-    const title = $("title").text();
-    const favicon =
-      $('link[rel="icon"]').attr("href") ||
-      $('link[rel="shortcut icon"]').attr("href") ||
-      "";
-    const absoluteFaviconUrl = favicon.startsWith("http")
-      ? favicon
-      : new URL(favicon, link).href;
+    const { id } = await req.json();
 
     const token = req.cookies.get("accessToken")?.value || "";
     if (!token) {
@@ -48,38 +34,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const item: Record<string, string> = {
-      title,
-      link,
-      favicon: absoluteFaviconUrl,
-      id: randomUUID(),
-    };
-    if (link.includes("github.com") || link.includes("x.com")) {
-      item["username"] = link.substring(link.lastIndexOf("/") + 1);
-    }
-    if (link.includes("leetcode.com")) {
-      item["username"] = link.substring(
-        link.indexOf("u/") + 2,
-        link.lastIndexOf("/")
-      );
-      item["type"]="leetcode"
-      item["title"]="Leetcode"
-      item["favicon"]="/leetcode.svg"
-    }
-    if (link.includes("github.com")) {
-      item["title"] = title.substring(
-        title.indexOf("(") + 1,
-        title.indexOf(")")
-      );
-      item["type"] = "github";
-    }
-    if (link.includes("x.com")) {
-      item["title"] = "X(Twitter)";
-      item["type"] = "x";
-      item["favicon"]="/x.svg"
-    }
-
-    console.log(item);
     const { data, error } = await supabase
       .from("Portfolio")
       .select("grids")
@@ -93,7 +47,7 @@ export async function POST(req: NextRequest) {
     }
 
     const existingLinks = data?.grids || [];
-    const toSet = [...existingLinks, item];
+    const toSet = existingLinks.filter((l: {id:string}) => l.id != id);
 
     const { error: updateError } = await supabase
       .from("Portfolio")
@@ -108,7 +62,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      item,
     });
   } catch (error) {
     console.log(error);

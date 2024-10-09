@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     try {
       decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as { slug: string };
     } catch (err) {
-      return NextResponse.json({ success: false, error: "Invalid or expired token" }, { status: 401 });
+      return NextResponse.json({ success: false, error: "Invalid or expired token",err }, { status: 401 });
     }
 
     if (!decodedToken || !decodedToken.slug) {
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Invalid update field" }, { status: 400 });
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("Portfolio")
       .update(updateData)
       .eq("slug", decodedToken.slug);

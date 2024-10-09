@@ -10,10 +10,10 @@ export async function POST(req: NextRequest) {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("Users")
       .insert([{ email, slug, password: hashedPassword }]);
-    const res = await supabase.from("Portfolio").insert([{ slug }]);
+    await supabase.from("Portfolio").insert([{ slug }]);
 
     if (error) {
       console.error("Error inserting user:", error.message);

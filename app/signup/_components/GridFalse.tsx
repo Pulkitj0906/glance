@@ -45,7 +45,6 @@ const GridFalse = () => {
         <div className="h-full w-1/2 center">
           <Month
             completed={progress}
-            month="September"
             startError={4}
             totalDays={30}
           />

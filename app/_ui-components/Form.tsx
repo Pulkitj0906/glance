@@ -14,7 +14,7 @@ const Form = ({ slug, method }: { slug: string; method: string }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignup = async (e: any) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -41,7 +41,7 @@ const Form = ({ slug, method }: { slug: string; method: string }) => {
     }
   };
 
-  const handlelogin = async (e: any) => {
+  const handlelogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -63,10 +63,16 @@ const Form = ({ slug, method }: { slug: string; method: string }) => {
       });
       const redirectLink = response.data.redirect;
       if (redirectLink) router.push("/" + redirectLink);
-    } catch (error: any) {
-      if (error.status == 401)
-        setError("Your email or password seems to be incorrect.");
-      console.log(error);
+    } catch (error:unknown) {
+      if (typeof error === 'object' && error !== null && 'status' in error) {
+        const err = error as { status: number; message: string };
+        if (err.status === 401) {
+          setError("Your email or password seems to be incorrect.");
+        }
+        console.log(err.message); 
+      } else {
+        console.log("An unknown error occurred:", error);
+      }
     } finally {
       setLoading(false);
     }
@@ -83,7 +89,7 @@ const Form = ({ slug, method }: { slug: string; method: string }) => {
           type="email"
           placeholder="Email address"
           onChange={(e) => {
-            setEmail(e.target.value), setError("");
+            setEmail(e.target.value); setError("");
           }}
           className="bg-transparent outline-none"
         />
@@ -93,7 +99,7 @@ const Form = ({ slug, method }: { slug: string; method: string }) => {
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             onChange={(e) => {
-              setPassword(e.target.value), setError("");
+              setPassword(e.target.value); setError("");
             }}
             className="bg-transparent outline-none"
           />

@@ -2,13 +2,15 @@ import Image from "next/image";
 import { IconType } from "react-icons";
 import GithubContri from "./_item-components/GithubContri";
 import { FaTrash } from "react-icons/fa";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import ChangeSpan from "./_item-components/ChangeSpan";
+import LeetcodeStats from "./_item-components/LeetcodeStats";
 
 const GridItem = ({
   Icon,
   faviconLink,
   title,
+  id,
   username,
   link,
   className,
@@ -16,7 +18,10 @@ const GridItem = ({
   buttonTitle,
   iconColor,
   type,
+  onDeleteGridItem,
+  role,
 }: {
+  id: string;
   link: string;
   Icon?: IconType;
   title?: string;
@@ -27,20 +32,32 @@ const GridItem = ({
   iconColor?: string;
   faviconLink?: string;
   type?: string;
+  role: string;
+  onDeleteGridItem: (id: string) => void;
 }) => {
   if (type == "github") {
     buttonClassName = "text-black";
     buttonTitle = "Follow";
   }
+  if (type == "x") {
+    className = "bg-[#1D9BF0]/10";
+    buttonClassName = "bg-[#1D9BF0] text-white";
+    buttonTitle = "Follow";
+  }
   const [rowSpan, setRowSpan] = useState(0);
   const [colSpan, setColSpan] = useState(0);
 
-  const handleChangeSpan = (e: any, x: number, y: number) => {
+  const handleChangeSpan = (
+    e: MouseEvent<HTMLButtonElement>,
+    x: number,
+    y: number
+  ) => {
     e.stopPropagation();
     e.preventDefault();
     setRowSpan(x);
     setColSpan(y);
   };
+
   return (
     <a
       href={link}
@@ -51,7 +68,11 @@ const GridItem = ({
     >
       <div className={`flex h-full ${rowSpan != 2 && "flex-col"}`}>
         <div className="">
-          <div className="size-10 rounded-xl center shadow-sm border-text-secondary/20 border-[0.1px]">
+          <div
+            className={`size-10 rounded-xl center shadow-sm border-text-secondary/20 border-[0.1px] ${
+              type == "x" && "bg-black"
+            }`}
+          >
             {Icon && <Icon size={40} color={iconColor} />}
             {faviconLink && (
               <Image
@@ -80,11 +101,31 @@ const GridItem = ({
           </button>
         )}
       </div>
-      <button className="absolute custom-shadow3 left-0 top-0 -translate-x-1/2 -translate-y-[40%] bg-white p-2 rounded-full hidden group-hover:block slide-u">
-        <FaTrash size={14} />
-      </button>
-      <ChangeSpan handleChangeSpan={handleChangeSpan} />
-      {type == "github" && (rowSpan == 2 || colSpan == 2) && <GithubContri rowSpan={rowSpan} colSpan={colSpan}/>}
+      {role == "self" && (
+        <>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onDeleteGridItem(id);
+            }}
+            className="absolute custom-shadow3 left-0 top-0 -translate-x-1/2 -translate-y-[40%] bg-white p-2 rounded-full hidden group-hover:block slide-u"
+          >
+            <FaTrash size={14} />
+          </button>
+          <ChangeSpan handleChangeSpan={handleChangeSpan} />
+        </>
+      )}
+      {type == "github" && username && (rowSpan == 2 || colSpan == 2) && (
+        <GithubContri rowSpan={rowSpan} colSpan={colSpan} username={username} />
+      )}
+      {type == "leetcode" && (rowSpan == 2 || colSpan == 2) && username && (
+        <LeetcodeStats
+          rowSpan={rowSpan}
+          colSpan={colSpan}
+          username={username}
+        />
+      )}
     </a>
   );
 };

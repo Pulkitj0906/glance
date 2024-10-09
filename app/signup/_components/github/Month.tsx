@@ -1,22 +1,13 @@
 const Month = ({
-  month,
   completed,
   totalDays,
   startError,
 }: {
-  month: string;
   totalDays: number;
   startError: number;
   completed: number[][];
 }) => {
   const cols = startError + totalDays > 35 ? 6 : 5;
-
-  const getFrequency = (dayIndex: number, weekIndex: number) => {
-    const idx = completed
-      .map((q) => q[0] == dayIndex + weekIndex * 7 - startError + 1)
-      .indexOf(true);
-    return idx >= 0 ? completed[idx][1] : 0;
-  };
 
   return (
     <table

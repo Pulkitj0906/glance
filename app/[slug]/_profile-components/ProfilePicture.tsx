@@ -12,11 +12,11 @@ const ProfilePicture = ({
   deletePfp,
 }: {
   self: boolean;
-  pfp: any;
+  pfp: string;
   deletePfp: (method: string) => void;
 }) => {
-  const [link, setLink] = useState(pfp ? pfp : pfp1);
-  const [pfpLoading, setPfpLoading] = useState(false)
+  const [link, setLink] = useState(pfp != "" ? pfp : pfp1);
+  const [pfpLoading, setPfpLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
@@ -30,7 +30,7 @@ const ProfilePicture = ({
 
     const formData = new FormData();
     formData.append("file", file);
-    setPfpLoading(true)
+    setPfpLoading(true);
     try {
       const res = await axios.post("/api/update/pfp", formData, {
         headers: {
@@ -43,15 +43,17 @@ const ProfilePicture = ({
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-    }finally{
-        setPfpLoading(false)
+    } finally {
+      setPfpLoading(false);
     }
   };
   return (
     <div className="relative rounded-full w-fit group">
-      {pfpLoading && <div className="absolute size-full center bg-white/70 ">
-        <Image alt="eye" src={eye} className="w-10" />
-      </div>}
+      {pfpLoading && (
+        <div className="absolute size-full center bg-white/70 ">
+          <Image alt="eye" src={eye} className="w-10" />
+        </div>
+      )}
       {self && (
         <>
           <input
@@ -69,7 +71,8 @@ const ProfilePicture = ({
           </button>
           <button
             onClick={() => {
-              deletePfp("pfp"), setLink(pfp1);
+              deletePfp("pfp");
+              setLink(pfp1);
             }}
             className="absolute bottom-[10%] custom-shadow3 right-3 bg-white p-2 rounded-full hidden group-hover:block slide-up"
           >
