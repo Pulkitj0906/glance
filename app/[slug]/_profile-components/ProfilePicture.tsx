@@ -32,7 +32,7 @@ const ProfilePicture = ({
     formData.append("file", file);
     setPfpLoading(true);
     try {
-      const res = await axios.post("/api/update/pfp", formData, {
+      const res = await axios.post("/api/grid/update/pfp", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

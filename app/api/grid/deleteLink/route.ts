@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { supabase } from "@/util/client";
@@ -22,7 +21,7 @@ export async function POST(req: NextRequest) {
       };
     } catch (err) {
       return NextResponse.json(
-        { success: false, error: "Invalid or expired token"+err },
+        { success: false, error: "Invalid or expired token" + err },
         { status: 401 }
       );
     }
@@ -34,26 +33,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
-      .from("Portfolio")
-      .select("grids")
-      .eq("slug", decodedToken.slug)
-      .single();
-    if (error && error.code !== "PGRST116") {
-      return NextResponse.json(
-        { success: false, error: "Error fetching portfolio data" },
-        { status: 500 }
-      );
-    }
-
-    const existingLinks = data?.grids || [];
-    const toSet = existingLinks.filter((l: {id:string}) => l.id != id);
-
-    const { error: updateError } = await supabase
-      .from("Portfolio")
-      .update({ grids: toSet })
-      .eq("slug", decodedToken.slug);
-    if (updateError) {
+    const { error: deleteError } = await supabase
+      .from("GridItem")
+      .delete()
+      .eq("id", id);
+    if (deleteError) {
       return NextResponse.json(
         { success: false, error: "Error updating portfolio" },
         { status: 505 }

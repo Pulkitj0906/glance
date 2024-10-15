@@ -35,7 +35,7 @@ const GithubContri = ({
             ? colSpan == 0
               ? "max-w-[140px] "
               : "max-w-[210px] "
-            : "max-w-[320px]"
+            : "max-w-[333px]"
         } overflow-clip `}
       >
         <GitHubContributions

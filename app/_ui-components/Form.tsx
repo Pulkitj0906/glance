@@ -28,7 +28,7 @@ const Form = ({ slug, method }: { slug: string; method: string }) => {
         setError("Account with this email exists!");
         return;
       }
-      const response = await axios.post("/api/signup", {
+      const response = await axios.post("/api/user/signup", {
         email,
         password,
         slug,
@@ -55,7 +55,7 @@ const Form = ({ slug, method }: { slug: string; method: string }) => {
         setError("This account does not exist. Sign up first.");
         return;
       }
-      const response = await axios.post("/api/login", {
+      const response = await axios.post("/api/user/login", {
         email,
         password,
         actualPassword: data[0].password,

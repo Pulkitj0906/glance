@@ -4,20 +4,27 @@ import Grid from "./_profile-components/Grid";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Dashboard from "./_profile-components/Dashboard";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ProfilePicture from "./_profile-components/ProfilePicture";
-import { DataType } from "@/util/lib";
+import { DataType, GridType } from "@/util/lib";
+import { supabase } from "@/util/client";
 
-const Profile = ({
-  data,
-  userSlug,
-}: {
-  data: DataType;
-  userSlug: string;
-}) => {
+const Profile = ({ data, userSlug }: { data: DataType; userSlug: string }) => {
   const [name, setName] = useState(data.name);
   const [bio, setBio] = useState(data.bio);
-  const [links, setLinks] = useState(data.grids);
+  const [links, setLinks] = useState<GridType[]>();
+
+  useMemo(async () => {
+    try {
+      const { data: items } = await supabase
+        .from("GridItem")
+        .select("*")
+        .eq("slug", data.slug);
+      setLinks(items!);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const router = useRouter();
   const role =
@@ -29,7 +36,7 @@ const Profile = ({
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post("/api/logout");
+      const res = await axios.post("/api/user/logout");
       if (res.status === 200) window.location.reload();
     } catch (error) {
       console.log(error);
@@ -48,7 +55,7 @@ const Profile = ({
 
   const saveProfile = async (toUpdate: string) => {
     try {
-      await axios.post("/api/update", {
+      await axios.post("/api/grid/update", {
         name,
         bio,
         toUpdate,
@@ -61,9 +68,11 @@ const Profile = ({
 
   const addLink = async (link: string) => {
     try {
-      const res = await axios.post("/api/addLink", { link });
+      const res = await axios.post("/api/grid/addLink", { link });
       if (res.data.item) {
-        setLinks((prevLinks) => [...prevLinks, res.data.item]);
+        setLinks((prevLinks) => {
+          if (prevLinks) return [...prevLinks, res.data.item];
+        });
       }
     } catch (error) {
       console.log(error);
@@ -71,10 +80,11 @@ const Profile = ({
   };
 
   const onDeleteGridItem = async (id: string) => {
+    if (!links) return;
     const filteredLinks = links.filter((l) => l.id !== id);
     setLinks(filteredLinks);
     try {
-      await axios.post("/api/deleteLink", { id });
+      await axios.post("/api/grid/deleteLink", { id });
     } catch (error) {
       console.log(error);
     }
@@ -142,7 +152,11 @@ const Profile = ({
         </div>
       </div>
       <div className="h-full w-full max-w-[350px] lg:max-w-fit xl:w-[820px] lg:ml-auto">
-        <Grid links={links} role={role} onDeleteGridItem={onDeleteGridItem} />
+        <Grid
+          links={links ? links : []}
+          role={role}
+          onDeleteGridItem={onDeleteGridItem}
+        />
       </div>
       {role == "self" && <Dashboard addLink={addLink} />}
     </div>

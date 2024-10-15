@@ -5,10 +5,19 @@ import { LuRectangleHorizontal } from "react-icons/lu";
 const ChangeSpan = ({
   handleChangeSpan,
 }: {
-  handleChangeSpan: (e: MouseEvent<HTMLButtonElement>, x: number, y: number) => void;
+  handleChangeSpan: (
+    e: MouseEvent<HTMLButtonElement>,
+    x: number,
+    y: number
+  ) => void;
 }) => {
   return (
-    <div onClick={(e)=>e.stopPropagation()} className="absolute  gap-1 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 p-1 rounded-md hidden group-hover:flex bg-black">
+    <div
+      onClick={(e) => {
+        e.stopPropagation(); e.preventDefault();
+      }}
+      className="absolute  gap-1 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 p-1 rounded-md hidden group-hover:flex bg-black"
+    >
       <button
         onClick={(e) => handleChangeSpan(e, 1, 1)}
         className="text-white p-1 hover:bg-white hover:text-black rounded-xl"

@@ -2,7 +2,6 @@ import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { supabase } from "@/util/client";
-import { randomUUID } from "crypto";
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,7 +35,7 @@ export async function POST(req: NextRequest) {
       };
     } catch (err) {
       return NextResponse.json(
-        { success: false, error: "Invalid or expired token"+err },
+        { success: false, error: "Invalid or expired token" + err },
         { status: 401 }
       );
     }
@@ -52,7 +51,6 @@ export async function POST(req: NextRequest) {
       title,
       link,
       favicon: absoluteFaviconUrl,
-      id: randomUUID(),
     };
     if (link.includes("github.com") || link.includes("x.com")) {
       item["username"] = link.substring(link.lastIndexOf("/") + 1);
@@ -62,9 +60,9 @@ export async function POST(req: NextRequest) {
         link.indexOf("u/") + 2,
         link.lastIndexOf("/")
       );
-      item["type"]="leetcode"
-      item["title"]="Leetcode"
-      item["favicon"]="/leetcode.svg"
+      item["type"] = "leetcode";
+      item["title"] = "Leetcode";
+      item["favicon"] = "/leetcode.svg";
     }
     if (link.includes("github.com")) {
       item["title"] = title.substring(
@@ -76,35 +74,11 @@ export async function POST(req: NextRequest) {
     if (link.includes("x.com")) {
       item["title"] = "X(Twitter)";
       item["type"] = "x";
-      item["favicon"]="/x.svg"
+      item["favicon"] = "/x.svg";
     }
+    item["slug"] = decodedToken.slug;
 
-    console.log(item);
-    const { data, error } = await supabase
-      .from("Portfolio")
-      .select("grids")
-      .eq("slug", decodedToken.slug)
-      .single();
-    if (error && error.code !== "PGRST116") {
-      return NextResponse.json(
-        { success: false, error: "Error fetching portfolio data" },
-        { status: 500 }
-      );
-    }
-
-    const existingLinks = data?.grids || [];
-    const toSet = [...existingLinks, item];
-
-    const { error: updateError } = await supabase
-      .from("Portfolio")
-      .update({ grids: toSet })
-      .eq("slug", decodedToken.slug);
-    if (updateError) {
-      return NextResponse.json(
-        { success: false, error: "Error updating portfolio" },
-        { status: 505 }
-      );
-    }
+    await supabase.from("GridItem").insert([item]);
 
     return NextResponse.json({
       success: true,

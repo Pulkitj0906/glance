@@ -8,10 +8,11 @@ export type DataType = {
   Users: { email: string };
 };
 export type GridType = {
-    title: string;
-    link: string;
-    favicon: string;
-    id: string;
-    username?: string;
-    type?: string;
-  };
+  title: string;
+  link: string;
+  favicon: string;
+  id: string;
+  username?: string;
+  type?: string;
+  span?: number[];
+};

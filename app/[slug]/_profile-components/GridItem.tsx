@@ -5,6 +5,7 @@ import { FaTrash } from "react-icons/fa";
 import { MouseEvent, useState } from "react";
 import ChangeSpan from "./_item-components/ChangeSpan";
 import LeetcodeStats from "./_item-components/LeetcodeStats";
+import axios from "axios";
 
 const GridItem = ({
   Icon,
@@ -18,6 +19,7 @@ const GridItem = ({
   buttonTitle,
   iconColor,
   type,
+  span,
   onDeleteGridItem,
   role,
 }: {
@@ -34,6 +36,7 @@ const GridItem = ({
   type?: string;
   role: string;
   onDeleteGridItem: (id: string) => void;
+  span?: number[];
 }) => {
   if (type == "github") {
     buttonClassName = "text-black";
@@ -44,10 +47,10 @@ const GridItem = ({
     buttonClassName = "bg-[#1D9BF0] text-white";
     buttonTitle = "Follow";
   }
-  const [rowSpan, setRowSpan] = useState(0);
-  const [colSpan, setColSpan] = useState(0);
+  const [rowSpan, setRowSpan] = useState(span ? span[0] : 0);
+  const [colSpan, setColSpan] = useState(span ? span[1] : 0);
 
-  const handleChangeSpan = (
+  const handleChangeSpan = async (
     e: MouseEvent<HTMLButtonElement>,
     x: number,
     y: number
@@ -56,10 +59,18 @@ const GridItem = ({
     e.preventDefault();
     setRowSpan(x);
     setColSpan(y);
+    if (rowSpan == x && colSpan == y) return;
+    try {
+      const span = [x, y];
+      await axios.post("/api/grid/update/span", { id, span });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <a
+      draggable={true}
       href={link}
       target="__blank__"
       className={`p-6 relative shadow-md group flex rounded-3xl active:scale-95 slide-up ${

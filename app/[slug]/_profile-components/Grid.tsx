@@ -1,3 +1,4 @@
+import { GridType } from "@/util/lib";
 import GridItem from "./GridItem";
 
 const Grid = ({
@@ -5,7 +6,7 @@ const Grid = ({
   role,
   onDeleteGridItem
 }: {
-  links: Record<string, string>[];
+  links: GridType[];
   role: string;
   onDeleteGridItem:(id: string) => void
 }) => {
@@ -65,6 +66,7 @@ const Grid = ({
             // Icon={FaGithub}
             onDeleteGridItem={onDeleteGridItem}
             id={l.id}
+            span={l.span}
             faviconLink={l.favicon}
             title={l.title}
             role={role}

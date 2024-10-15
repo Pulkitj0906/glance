@@ -17,7 +17,7 @@ const LeetcodeStats: React.FC<LeetcodeStatsProps> = ({
   const [submittedCount, setSubmittedCount] = useState([0, 0, 0, 0]);
 
   useMemo(async () => {
-    const req=await axios.post("/api/getLeetcodeStats",{username})
+    const req=await axios.post("/api/grid/getLeetcodeStats",{username})
     setTotalCount(req.data.allQuestionsCount)
     setSubmittedCount(req.data.acSubmissionCounts)
   }, []);

@@ -20,7 +20,6 @@ const Page = () => {
       .select(`*,Users(email)`)
       .eq("slug", router)
       .single();
-    console.log(data)
     if (data) {
       setData(data);
       setStatus("found");
