@@ -12,7 +12,7 @@ const Page = () => {
   const router = usePathname().substring(1);
   const [status, setStatus] = useState("loading");
   const [data, setData] = useState<DataType>();
-  const [userSlug, setUserSlug] = useState("")
+  const [userSlug, setUserSlug] = useState("");
 
   const fetchData = async () => {
     const { data } = await supabase
@@ -23,6 +23,13 @@ const Page = () => {
     if (data) {
       setData(data);
       setStatus("found");
+      if (typeof window !== "undefined") {
+        if (data.name) document.title = data.name;
+        const favicon = document.querySelector(
+          "link[rel='icon']"
+        )   as HTMLLinkElement;
+        if (favicon && data.pfp) favicon.href = data.pfp;
+      }
     } else {
       setStatus("Available");
     }
@@ -30,15 +37,15 @@ const Page = () => {
 
   useMemo(() => {
     fetchData();
-    fetchUserInfo().then(slug=>setUserSlug(slug))
+    fetchUserInfo().then((slug) => setUserSlug(slug));
   }, []);
 
   switch (status) {
     case "found":
-      return <Profile data={data!} userSlug={userSlug}/>;
+      return <Profile data={data!} userSlug={userSlug} />;
 
     case "Available":
-      return <Available slug={router} userSlug={userSlug}/>;
+      return <Available slug={router} userSlug={userSlug} />;
 
     default:
       return <Loading />;
